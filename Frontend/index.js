@@ -13,6 +13,15 @@ const LOCALES = {
   Telugu: "te-IN"
 };
 
+// Use a deploy-safe API URL.
+// For local development, it will hit localhost.
+// For Render deployment, replace the default value with your deployed backend URL.
+const API_BASE_URL =
+  window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://127.0.0.1:5000'
+    : 'https://your-render-backend-url.onrender.com';
+
+const GENERATE_AUDIO_GUIDE_API_URL = `${API_BASE_URL}/generate-audio-guide`;
 
 // --- State ---
 const state = {
@@ -122,11 +131,7 @@ voiceButtons.forEach(btn => {
   });
 });
 
-
 // Generate Audio guide button Logic
-
-const GENERATE_AUDIO_GUIDE_API_URL = "http://127.0.0.1:5000/generate-audio-guide";
-
 generateButton.addEventListener('click', async () => {
   generateButton.disabled = true;
   generateButton.textContent = '⏳ Generating Audio...';
